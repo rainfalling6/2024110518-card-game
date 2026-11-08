@@ -33,6 +33,15 @@ class CardAdapter(
         val card = cards[position]
         val cardView = holder.cardView
 
+        // 横屏和竖屏使用不同的卡片高度，保证 24 张牌都能完整显示。
+        val resources = cardView.resources
+        val height = resources.getDimensionPixelSize(R.dimen.card_height)
+        val margin = resources.getDimensionPixelSize(R.dimen.card_margin)
+        val params = cardView.layoutParams as RecyclerView.LayoutParams
+        params.height = height
+        params.setMargins(margin, margin, margin, margin)
+        cardView.layoutParams = params
+
         if (card.isChosen || card.isMatched) {
             cardView.text = card.toString()
             cardView.setBackgroundResource(
