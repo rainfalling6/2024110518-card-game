@@ -46,9 +46,17 @@
     <string name="default_hobby_1">旅游</string>
     <string name="default_hobby_2">阅读</string>
 
+    <!-- 主界面菜单与关于对话框 -->
+    <string name="menu_about">关于</string>
+    <string name="about_title">关于本应用</string>
+    <string name="about_message">应用名称：%1$s\n姓名：%2$s\n学号：%3$s\n版本：%4$s\n\n本应用使用 RecyclerView 实现 24 张牌的三张配对翻牌游戏。</string>
+    <string name="about_ok">确定</string>
+    <string name="about_version">1.0</string>
+
     <!-- 翻牌游戏界面 -->
     <string name="card_game_title">翻牌游戏</string>
     <string name="score_format">得分：%1$d</string>
+    <string name="game_hint">每局选择 3 张点数相同的牌进行配对</string>
     <string name="btn_reset">重置游戏</string>
     <string name="btn_exit">退出</string>
     <string name="card_back">?</string>

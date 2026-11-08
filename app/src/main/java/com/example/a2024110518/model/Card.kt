@@ -15,16 +15,23 @@ class Card(
         return suit + rank
     }
 
+    /**
+     * 判断当前牌与 [otherCards] 是否组成一组。
+     *
+     * 规则由原来的两张牌扩展为三张牌：
+     * 所有牌点数相同返回 4，所有牌花色相同返回 1，否则返回 0。
+     * 由于方法接收的是数组，两张牌模式仍然兼容。
+     */
     fun match(otherCards: Array<Card>): Int {
-        var score = 0
-        if (otherCards.size == 1) {
-            val otherCard = otherCards[0]
-            if (otherCard.rank == rank) {
-                score = 4
-            } else if (otherCard.suit == suit) {
-                score = 1
-            }
+        if (otherCards.isEmpty()) {
+            return 0
         }
-        return score
+        if (otherCards.all { it.rank == rank }) {
+            return 4
+        }
+        if (otherCards.all { it.suit == suit }) {
+            return 1
+        }
+        return 0
     }
 }

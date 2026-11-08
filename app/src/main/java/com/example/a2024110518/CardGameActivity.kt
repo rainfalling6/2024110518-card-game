@@ -1,26 +1,30 @@
 package com.example.a2024110518
 
-import android.graphics.Typeface
+import android.content.res.Configuration
 import android.os.Bundle
-import android.view.Gravity
 import android.widget.Button
-import android.widget.GridLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.a2024110518.model.CardMatchingGame
 import com.example.a2024110518.model.PlayerInfo
 
 /**
- * 翻牌游戏 Activity，承担 MVC 中的 Controller 角色：
- * 接收用户点击、调用 CardMatchingGame 模型处理，并把最新状态同步到界面。
+ * 翻牌游戏 Activity，承担 MVC 中的 Controller 角色。
+ *
+ * View 使用 RecyclerView + GridLayoutManager 显示 24 张牌；
+ * Adapter 负责单张牌 item 的绑定与点击回调；
+ * Model 负责发牌、三张牌配对和计分。
  */
-class CardGameActivity : AppCompatActivity() {
+class CardGameActivity : AppCompatActivity(), CardAdapter.OnCardClickListener {
 
-    private lateinit var gridCards: GridLayout
+    private lateinit var rvCards: RecyclerView
     private lateinit var tvScore: TextView
+    private lateinit var layoutManager: GridLayoutManager
     private lateinit var game: CardMatchingGame
-    private val cardViews = mutableListOf<TextView>()
+    private lateinit var adapter: CardAdapter
     private var gameOverAnnounced = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,8 +32,12 @@ class CardGameActivity : AppCompatActivity() {
         setContentView(R.layout.activity_card_game)
         PlayerInfo.ensureInitialized(this)
 
-        gridCards = findViewById(R.id.gridCards)
+        rvCards = findViewById(R.id.rvCards)
         tvScore = findViewById(R.id.tvScore)
+
+        layoutManager = GridLayoutManager(this, spanCountForOrientation(resources.configuration))
+        rvCards.layoutManager = layoutManager
+        rvCards.setHasFixedSize(true)
 
         findViewById<Button>(R.id.btnReset).setOnClickListener { startNewGame() }
         findViewById<Button>(R.id.btnExit).setOnClickListener { finish() }
@@ -37,49 +45,21 @@ class CardGameActivity : AppCompatActivity() {
         startNewGame()
     }
 
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        layoutManager.spanCount = spanCountForOrientation(newConfig)
+        adapter.notifyDataSetChanged()
+    }
+
     override fun onPause() {
         super.onPause()
         PlayerInfo.highestScore = maxOf(PlayerInfo.highestScore, game.score)
     }
 
-    private fun startNewGame() {
-        game = CardMatchingGame(CARD_COUNT)
-        gameOverAnnounced = false
-        buildCardViews()
-        updateGameViews()
-    }
-
-    private fun buildCardViews() {
-        gridCards.removeAllViews()
-        cardViews.clear()
-
-        val cardWidth = resources.getDimensionPixelSize(R.dimen.card_width)
-        val cardHeight = resources.getDimensionPixelSize(R.dimen.card_height)
-        val margin = resources.getDimensionPixelSize(R.dimen.card_margin)
-
-        for (index in 0 until game.cardCount) {
-            val cardView = TextView(this).apply {
-                gravity = Gravity.CENTER
-                textSize = 20f
-                typeface = Typeface.DEFAULT_BOLD
-                setTextColor(getColor(R.color.card_text))
-                setBackgroundResource(R.drawable.bg_card_back)
-                isClickable = true
-                setOnClickListener { onCardClicked(index) }
-            }
-            val params = GridLayout.LayoutParams().apply {
-                width = cardWidth
-                height = cardHeight
-                setMargins(margin, margin, margin, margin)
-            }
-            gridCards.addView(cardView, params)
-            cardViews.add(cardView)
-        }
-    }
-
-    private fun onCardClicked(index: Int) {
-        game.chooseCardAtIndex(index)
-        updateGameViews()
+    override fun onCardClick(position: Int) {
+        game.chooseCardAtIndex(position)
+        adapter.notifyDataSetChanged()
+        updateScore()
 
         if (allCardsMatched() && !gameOverAnnounced) {
             gameOverAnnounced = true
@@ -89,34 +69,33 @@ class CardGameActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateGameViews() {
-        tvScore.text = getString(R.string.score_format, game.score)
+    private fun startNewGame() {
+        game = CardMatchingGame(CARD_COUNT)
+        gameOverAnnounced = false
+        adapter = CardAdapter(game.cards, this)
+        rvCards.adapter = adapter
+        updateScore()
+    }
 
-        for (index in 0 until game.cardCount) {
-            val card = game.cardAtIndex(index)
-            val cardView = cardViews[index]
-            if (card.isChosen || card.isMatched) {
-                cardView.text = card.toString()
-                cardView.setBackgroundResource(
-                    if (card.isMatched) R.drawable.bg_card_matched else R.drawable.bg_card_front
-                )
-            } else {
-                cardView.text = getString(R.string.card_back)
-                cardView.setBackgroundResource(R.drawable.bg_card_back)
-            }
-        }
+    private fun updateScore() {
+        tvScore.text = getString(R.string.score_format, game.score)
     }
 
     private fun allCardsMatched(): Boolean {
-        for (index in 0 until game.cardCount) {
-            if (!game.cardAtIndex(index).isMatched) {
-                return false
-            }
+        return game.cards.all { it.isMatched }
+    }
+
+    private fun spanCountForOrientation(configuration: Configuration): Int {
+        return if (configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            LANDSCAPE_SPAN_COUNT
+        } else {
+            PORTRAIT_SPAN_COUNT
         }
-        return true
     }
 
     companion object {
-        private const val CARD_COUNT = 16
+        private const val CARD_COUNT = 24
+        private const val PORTRAIT_SPAN_COUNT = 4
+        private const val LANDSCAPE_SPAN_COUNT = 6
     }
 }

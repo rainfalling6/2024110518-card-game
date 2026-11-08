@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="card_width">62dp</dimen>
-    <dimen name="card_height">82dp</dimen>
-    <dimen name="card_margin">6dp</dimen>
+    <dimen name="card_height">44dp</dimen>
+    <dimen name="card_margin">3dp</dimen>
 </resources>
