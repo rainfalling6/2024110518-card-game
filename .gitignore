@@ -1,0 +1,23 @@
+*.iml
+.gradle
+/local.properties
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+/.idea/
+.kotlin/
+/.claude/
+
+# 实验原始材料
+/model.zip
+/翻牌游戏.pdf
+/实验四+翻牌游戏应用.docx

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">李逸凡2024110518</string>
+
+    <!-- 主界面 -->
+    <string name="avatar_desc">头像</string>
+    <string name="info_name">姓名：%1$s</string>
+    <string name="info_gender">性别：%1$s</string>
+    <string name="info_student_id">学号：%1$s</string>
+    <string name="info_phone">电话：%1$s</string>
+    <string name="info_email">邮箱：%1$s</string>
+    <string name="info_hobby">爱好：%1$s</string>
+    <string name="info_high_score">游戏最高分：%1$d</string>
+    <string name="btn_edit_info">修改个人信息</string>
+    <string name="btn_card_game">翻牌游戏</string>
+
+    <!-- 信息修改界面 -->
+    <string name="person_info_title">信息修改</string>
+    <string name="label_name">姓名</string>
+    <string name="label_student_id">学号</string>
+    <string name="label_phone">电话号码</string>
+    <string name="label_email">电子邮件地址</string>
+    <string name="label_gender">性别</string>
+    <string name="label_hobby">爱好</string>
+    <string name="hint_name">请输入姓名</string>
+    <string name="hint_student_id">请输入学号</string>
+    <string name="hint_phone">请输入电话号码</string>
+    <string name="hint_email">请输入电子邮件地址</string>
+    <string name="gender_male">男</string>
+    <string name="gender_female">女</string>
+    <string name="hobby_travel">旅游</string>
+    <string name="hobby_reading">阅读</string>
+    <string name="hobby_game">游戏</string>
+    <string name="hobby_shopping">购物</string>
+    <string name="btn_save">保存</string>
+    <string name="btn_cancel">取消</string>
+    <string name="error_name_empty">姓名不能为空</string>
+    <string name="toast_saved">个人信息已更新</string>
+    <string name="hobby_separator">、</string>
+
+    <!-- 默认玩家数据 -->
+    <string name="default_name">李逸凡</string>
+    <string name="default_student_id">2024110518</string>
+    <string name="default_phone">13800138000</string>
+    <string name="default_email">liyifan@example.com</string>
+    <string name="default_hobby_1">旅游</string>
+    <string name="default_hobby_2">阅读</string>
+
+    <!-- 翻牌游戏界面 -->
+    <string name="card_game_title">翻牌游戏</string>
+    <string name="score_format">得分：%1$d</string>
+    <string name="btn_reset">重置游戏</string>
+    <string name="btn_exit">退出</string>
+    <string name="card_back">?</string>
+    <string name="toast_all_matched">恭喜全部配对成功，最终得分：%1$d</string>
+
+    <string-array name="hobby_options">
+        <item>@string/hobby_travel</item>
+        <item>@string/hobby_reading</item>
+        <item>@string/hobby_game</item>
+        <item>@string/hobby_shopping</item>
+    </string-array>
+</resources>

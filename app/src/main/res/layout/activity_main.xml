@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:fitsSystemWindows="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="24dp">
+
+        <ImageView
+            android:id="@+id/ivAvatar"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:background="@drawable/bg_avatar"
+            android:contentDescription="@string/avatar_desc"
+            android:padding="20dp"
+            android:src="@drawable/ic_avatar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/infoContainer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivAvatar">
+
+            <TextView
+                android:id="@+id/tvNameValue"
+                style="@style/InfoText" />
+
+            <TextView
+                android:id="@+id/tvGenderValue"
+                style="@style/InfoText" />
+
+            <TextView
+                android:id="@+id/tvStudentIdValue"
+                style="@style/InfoText" />
+
+            <TextView
+                android:id="@+id/tvPhoneValue"
+                style="@style/InfoText" />
+
+            <TextView
+                android:id="@+id/tvEmailValue"
+                style="@style/InfoText" />
+
+            <TextView
+                android:id="@+id/tvHobbyValue"
+                style="@style/InfoText" />
+
+            <TextView
+                android:id="@+id/tvHighScoreValue"
+                style="@style/InfoText" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnEditInfo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="@string/btn_edit_info"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/infoContainer" />
+
+        <Button
+            android:id="@+id/btnCardGame"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/btn_card_game"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnEditInfo" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
